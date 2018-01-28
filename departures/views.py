@@ -13,4 +13,4 @@ class DeparturesView(View):
     cr = csv.DictReader(decoded_content.splitlines(), delimiter=',')
     data_list = list(cr)
 
-    return JsonResponse({ 'data': data_list })
+    return JsonResponse({ 'departures': data_list })
