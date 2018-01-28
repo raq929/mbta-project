@@ -1,3 +1,39 @@
-<h1>MBTA Departures</h1>
+{% load static %}
+{% load render_bundle from webpack_loader %}
 
-<div id='js-departures-board'></div>
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
+  <head>
+    {% block head %}
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <title>
+        MBTA Departures
+      </title>
+      <meta name="description" content="" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" type="image/x-icon" href={% static 'favicon/favicon.ico' %}/>
+
+      {% block css %}
+        {% render_bundle 'common' 'css' %}
+      {% endblock %}
+
+      <!--[if lte IE 11]>
+      <script type="text/javascript" src="{% static 'js/picturefill.3.0.2.min.js' %}"></script>
+      <![endif]-->
+    {% endblock %}
+  </head>
+
+  <body class="{% block body_class %}{% endblock %}">
+    <h1>MBTA Departures</h1>
+
+    <div id='js-departures-board'></div>
+  </body>
+
+  {% block js %}
+    {% render_bundle 'common' 'js' %}
+  {% endblock %}
+</html>
