@@ -9,6 +9,7 @@ class DeparturesRow extends React.Component {
 
   render() {
     const { origin, trip, destination, scheduledTime, track, lateness, status } = this.props
+
     return (
       <tr>
         <td>{origin}</td>
@@ -27,7 +28,8 @@ class DepartureBoard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoading: true
+      isLoading: true,
+      error: false
     }
   }
 
@@ -36,17 +38,22 @@ class DepartureBoard extends React.Component {
       .then(response => {
         this.setState({
           isLoading: false,
+          error: false,
           departures: response.data.departures
         })
 
       })
       .catch(response => {
+        this.setState({
+          isLoading: false,
+          error: true
+        })
         console.error(response)
       })
   }
 
   render() {
-    if(this.state.isLoading == false) {
+    if(this.state.isLoading == false && this.state.error == false) {
       console.log(this.state.departures)
       const departures = this.state.departures.map((departure, index) => {
         return <DeparturesRow
@@ -79,8 +86,10 @@ class DepartureBoard extends React.Component {
           </tbody>
         </table>
       )
+    } else if(this.state.loading == false && this.state.error == true) {
+      return <h3>Departure data cannot be loaded. Please try again later.</h3>
     } else {
-      return <h3>Loading... </h3>
+      return <h3>Loading...</h3>
     }
   }
 }
