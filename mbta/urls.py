@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from departures.views import DeparturesView
+from home.views import HomeView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', DeparturesView.as_view())
+    url(r'^$', HomeView.as_view()),
+    url(r'^departures/', DeparturesView.as_view())
 ]
