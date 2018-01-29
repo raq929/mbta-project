@@ -2,18 +2,19 @@
   font-family: $serif
   margin-bottom: 0.5rem
 
-.departure-board__table
+.departure-board__wrapper
   font-family: $sans-serif
-  border-collapse: collapse
   background-color: black
   color: yellow
+  padding: 1rem 1.5rem
+  display: inline-block
+
+.departure-board__table
   th, td
-    padding: 0.5rem
-    &:first-child
-      padding-left: 1rem
-    &:last-child
-      padding-right: 1rem
+    padding: 0.5rem 0.75rem
+  th
+    text-align: left
   tr
     &:hover, &:focus
-      background-color: lighten(black, 10%)
+      background-color: lighten(black, 15%)
 

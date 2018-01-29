@@ -44,22 +44,25 @@ class DepartureBoard extends React.Component {
       />
     })
 
+    // refactor to store as state
     if(departures.length > 0) {
       return(
-        <table className="departure-board__table">
-          <thead>
-            <tr>
-              <th>Departure Time</th>
-              <th>Destination</th>
-              <th>Trip</th>
-              <th>Track</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {departures}
-          </tbody>
-        </table>
+        <div className="departure-board__wrapper">
+          <table className="departure-board__table">
+            <thead>
+              <tr>
+                <th>Departure Time</th>
+                <th>Destination</th>
+                <th>Trip</th>
+                <th>Track</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {departures}
+            </tbody>
+          </table>
+        </div>
       )
     } else {
       return (
