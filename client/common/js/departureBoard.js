@@ -1,6 +1,7 @@
 window.React = require('react')
 window.ReactDOM = require('react-dom')
 import axios from 'axios'
+import moment from 'moment'
 
 class DeparturesRow extends React.Component {
   constructor(props) {
@@ -56,12 +57,13 @@ class DepartureBoard extends React.Component {
     if(this.state.isLoading == false && this.state.error == false) {
       console.log(this.state.departures)
       const departures = this.state.departures.map((departure, index) => {
+      const scheduledTime = moment(+departure.ScheduledTime*1000).format('h:mm A')
         return <DeparturesRow
           key={index}
           origin={departure.Origin}
           trip={departure.Trip}
           destination={departure.Destination}
-          scheduledTime={departure.ScheduledTime}
+          scheduledTime={scheduledTime}
           track={departure.Track}
           lateness={departure.Lateness}
           status={departure.Status}
