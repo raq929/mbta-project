@@ -10,13 +10,14 @@ class DeparturesRow extends React.Component {
 
   render() {
     const { origin, trip, destination, currentDepartureTime, track, lateness, status } = this.props
+    const trackOrTbd = track || 'TBD'
 
     return (
       <tr>
         <td>{currentDepartureTime}</td>
         <td>{destination}</td>
         <td>{trip}</td>
-        <td>{track}</td>
+        <td>{trackOrTbd}</td>
         <td>{status}</td>
       </tr>
     )
@@ -32,6 +33,7 @@ class DepartureBoard extends React.Component {
     // create an array of departure rows
     const departures = this.props.departures.map((departure, index) => {
       const scheduledTime = moment(+departure.ScheduledTime*1000)
+      // add the lateness to the departure time
       const currentDepartureTime = scheduledTime.add(departure.Lateness, 'seconds').format('h:mm A')
 
       return <DeparturesRow
@@ -44,7 +46,6 @@ class DepartureBoard extends React.Component {
       />
     })
 
-    // refactor to store as state
     if(departures.length > 0) {
       return(
         <div className="departure-board__wrapper">
