@@ -108,11 +108,11 @@ class AllDepartures extends React.Component {
 
   componentDidMount() {
     this.getData()
-    // refresh data every 15 seconds
+    // refresh data every 10 seconds
     this.timerID = setInterval(
       // ensure that the right this is invoked
       this.getData.bind(this),
-      1000 * 15
+      1000 * 10
     )
   }
 
