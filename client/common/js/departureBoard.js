@@ -14,7 +14,6 @@ class DeparturesRow extends React.Component {
     return (
       <tr>
         <td>{currentDepartureTime}</td>
-        <td>{origin}</td>
         <td>{destination}</td>
         <td>{trip}</td>
         <td>{track}</td>
@@ -25,6 +24,46 @@ class DeparturesRow extends React.Component {
 }
 
 class DepartureBoard extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    // create an array of departure rows
+    const departures = this.props.departures.map((departure, index) => {
+      const scheduledTime = moment(+departure.ScheduledTime*1000)
+      const currentDepartureTime = scheduledTime.add(departure.Lateness, 'seconds').format('h:mm A')
+
+      return <DeparturesRow
+        key={index}
+        trip={departure.Trip}
+        destination={departure.Destination}
+        currentDepartureTime={currentDepartureTime}
+        track={departure.Track}
+        status={departure.Status}
+      />
+    })
+
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Departure Time</th>
+            <th>Destination</th>
+            <th>Trip</th>
+            <th>Track</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {departures}
+        </tbody>
+      </table>
+    )
+  }
+}
+
+class AllDepartures extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -54,39 +93,26 @@ class DepartureBoard extends React.Component {
 
   render() {
     if(this.state.isLoading == false && this.state.error == false) {
-      // create an array of departure rows
-      const departures = this.state.departures.map((departure, index) => {
-        const scheduledTime = moment(+departure.ScheduledTime*1000)
-        const currentDepartureTime = scheduledTime.add(departure.Lateness, 'seconds').format('h:mm A')
+      const departures = this.state.departures
+      const southStationDepartures = departures.filter((departure) => {
+        return departure.Origin === "South Station"
+      })
 
-        return <DeparturesRow
-          key={index}
-          origin={departure.Origin}
-          trip={departure.Trip}
-          destination={departure.Destination}
-          currentDepartureTime={currentDepartureTime}
-          track={departure.Track}
-          lateness={departure.Lateness}
-          status={departure.Status}
-        />
+      const northStationDepartures = departures.filter((departure) => {
+        return departure.Origin === "North Station"
       })
 
       return (
-        <table>
-          <thead>
-            <tr>
-              <th>Departure Time</th>
-              <th>Origin</th>
-              <th>Destination</th>
-              <th>Trip</th>
-              <th>Track</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {departures}
-          </tbody>
-        </table>
+        <main>
+          <section>
+            <h2>South Station</h2>
+            <DepartureBoard departures={southStationDepartures} />
+          </section>
+          <section>
+            <h2>North Station</h2>
+            <DepartureBoard departures={northStationDepartures} />
+          </section>
+        </main>
       )
     } else if(this.state.loading == false && this.state.error == true) {
       return <h3>Departure data cannot be loaded. Please try again later.</h3>
@@ -102,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const board = document.getElementById('js-departures-board')
   if (board) {
     ReactDOM.render(
-      <DepartureBoard />,
+      <AllDepartures />,
       board
     )
   }
