@@ -9,17 +9,16 @@ class DeparturesRow extends React.Component {
   }
 
   render() {
-    const { origin, trip, destination, scheduledTime, track, lateness, status } = this.props
+    const { origin, trip, destination, currentDepartureTime, track, lateness, status } = this.props
 
     return (
       <tr>
+        <td>{currentDepartureTime}</td>
         <td>{origin}</td>
-        <td>{trip}</td>
         <td>{destination}</td>
-        <td>{scheduledTime}</td>
-        <td>{lateness}</td>
-        <td>{status}</td>
+        <td>{trip}</td>
         <td>{track}</td>
+        <td>{status}</td>
       </tr>
     )
   }
@@ -55,15 +54,17 @@ class DepartureBoard extends React.Component {
 
   render() {
     if(this.state.isLoading == false && this.state.error == false) {
-      console.log(this.state.departures)
+      // create an array of departure rows
       const departures = this.state.departures.map((departure, index) => {
-      const scheduledTime = moment(+departure.ScheduledTime*1000).format('h:mm A')
+        const scheduledTime = moment(+departure.ScheduledTime*1000)
+        const currentDepartureTime = scheduledTime.add(departure.Lateness, 'seconds').format('h:mm A')
+
         return <DeparturesRow
           key={index}
           origin={departure.Origin}
           trip={departure.Trip}
           destination={departure.Destination}
-          scheduledTime={scheduledTime}
+          currentDepartureTime={currentDepartureTime}
           track={departure.Track}
           lateness={departure.Lateness}
           status={departure.Status}
@@ -74,13 +75,12 @@ class DepartureBoard extends React.Component {
         <table>
           <thead>
             <tr>
+              <th>Departure Time</th>
               <th>Origin</th>
-              <th>Trip</th>
               <th>Destination</th>
-              <th>Scheduled Time</th>
-              <th>Lateness</th>
-              <th>Status</th>
+              <th>Trip</th>
               <th>Track</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
