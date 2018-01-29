@@ -72,7 +72,7 @@ class AllDepartures extends React.Component {
     }
   }
 
-  componentDidMount() {
+  getData() {
     axios.get('/departures')
       .then(response => {
         this.setState({
@@ -89,6 +89,16 @@ class AllDepartures extends React.Component {
         })
         console.error(response)
       })
+  }
+
+  componentDidMount() {
+    this.getData()
+    // refresh data every 15 seconds
+    this.timerID = setInterval(
+      // ensure that the right this is invoked
+      this.getData.bind(this),
+      1000 * 15
+    )
   }
 
   render() {
