@@ -117,7 +117,7 @@ class AllDepartures extends React.Component {
   }
 
   render() {
-    if(this.state.isLoading == false && this.state.error == false) {
+    if(this.state.isLoading === false && this.state.error === false) {
       const departures = this.state.departures
       const southStationDepartures = departures.filter((departure) => {
         return departure.Origin === "South Station"
@@ -141,7 +141,7 @@ class AllDepartures extends React.Component {
           </section>
         </main>
       )
-    } else if(this.state.loading == false && this.state.error == true) {
+    } else if(this.state.isLoading === false && this.state.error === true) {
       return <h3>Departure data cannot be loaded. Please try again later.</h3>
     } else {
       return <h3>Loading...</h3>
