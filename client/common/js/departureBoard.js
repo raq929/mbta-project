@@ -89,12 +89,13 @@ class AllDepartures extends React.Component {
   getData() {
     axios.get('/departures')
       .then(response => {
+        const { departures, timeLoaded } = response.data
         this.setState({
           isLoading: false,
           error: false,
-          departures: response.data.departures
+          departures: departures,
+          timeLoaded: timeLoaded
         })
-
       })
       .catch(response => {
         this.setState({
@@ -125,9 +126,11 @@ class AllDepartures extends React.Component {
       const northStationDepartures = departures.filter((departure) => {
         return departure.Origin === "North Station"
       })
+      const timeLoadedHumanReadable = moment(+this.state.timeLoaded*1000).format("dddd, MMMM Do YYYY, h:mm:ss a")
 
       return (
         <main>
+          <p>Data Loaded: <em>{timeLoadedHumanReadable}</em></p>
           <section className="departure-board">
             <h2 className="departure-board__header">South Station</h2>
             <DepartureBoard departures={southStationDepartures} />
