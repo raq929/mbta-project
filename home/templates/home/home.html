@@ -16,6 +16,7 @@
       <meta name="description" content="" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" type="image/x-icon" href={% static 'favicon/favicon.ico' %}/>
+      <link href="https://fonts.googleapis.com/css?family=Gafata|Rokkitt" rel="stylesheet">
 
       {% block css %}
         {% render_bundle 'common' 'css' %}
@@ -27,8 +28,8 @@
     {% endblock %}
   </head>
 
-  <body class="{% block body_class %}{% endblock %}">
-    <h1>MBTA Departures</h1>
+  <body class="body">
+    <h1 class="page-header">MBTA Departures</h1>
 
     <div id='js-departures-board'></div>
   </body>

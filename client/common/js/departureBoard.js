@@ -44,22 +44,30 @@ class DepartureBoard extends React.Component {
       />
     })
 
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Departure Time</th>
-            <th>Destination</th>
-            <th>Trip</th>
-            <th>Track</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {departures}
-        </tbody>
-      </table>
-    )
+    if(departures.length > 0) {
+      return(
+        <table className="departure-board__table">
+          <thead>
+            <tr>
+              <th>Departure Time</th>
+              <th>Destination</th>
+              <th>Trip</th>
+              <th>Track</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {departures}
+          </tbody>
+        </table>
+      )
+    } else {
+      return (
+        <div className="departure-board__nodata">
+          There are no current departures.
+        </div>
+      )
+    }
   }
 }
 
@@ -114,12 +122,12 @@ class AllDepartures extends React.Component {
 
       return (
         <main>
-          <section>
-            <h2>South Station</h2>
+          <section className="departure-board">
+            <h2 className="departure-board__header">South Station</h2>
             <DepartureBoard departures={southStationDepartures} />
           </section>
-          <section>
-            <h2>North Station</h2>
+          <section className="departure-board">
+            <h2 className="departure-board__header">North Station</h2>
             <DepartureBoard departures={northStationDepartures} />
           </section>
         </main>
