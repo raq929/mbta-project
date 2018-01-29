@@ -11,6 +11,8 @@ class DeparturesRow extends React.Component {
   render() {
     const { origin, trip, destination, currentDepartureTime, track, lateness, status } = this.props
     const trackOrTbd = track || 'TBD'
+    const latenessInMinutes = lateness > 0? Math.round(lateness/60) : 0
+    let statusWithLateness = latenessInMinutes > 0? `${status} ${latenessInMinutes} minutes` : status
 
     return (
       <tr>
@@ -18,7 +20,7 @@ class DeparturesRow extends React.Component {
         <td>{destination}</td>
         <td>{trip}</td>
         <td>{trackOrTbd}</td>
-        <td>{status}</td>
+        <td>{statusWithLateness}</td>
       </tr>
     )
   }
