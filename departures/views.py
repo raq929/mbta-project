@@ -1,5 +1,6 @@
 import csv
 import requests
+import time
 from django.http import JsonResponse
 
 # Create your views here.
@@ -13,10 +14,15 @@ class DeparturesView(View):
             decoded_content = r.content.decode('utf-8')
             cr = csv.DictReader(decoded_content.splitlines(), delimiter=',')
             data_list = list(cr)
-            print(data_list[0]['TimeStamp'])
+            if len(data_list) > 0:
+                time_loaded = data_list[0]['TimeStamp']
+            else:
+                # if there are no trains, there is no way to get the date loaded. Pass the current date in the same format (Epoch time as a string)
+                time_loaded = str(int(time.time()))
+
             return JsonResponse({
                     'departures': data_list,
-                    'timeLoaded': data_list[0]['TimeStamp']
+                    'timeLoaded': time_loaded
                 })
         else:
             return JsonResponse(
