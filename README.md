@@ -1,12 +1,13 @@
 # MBTA Departure Board
+[Deployed app](https://stormy-ridge-48421.herokuapp.com/)
 
 ## About the app
 
-This app gets real time MBTA departure data in a csv format and displays it on a webpage in human-readable form. It checks for new data and refreshes every 5 seconds.
+This app gets real time MBTA departure data in a csv format and displays it on a webpage in human-readable form. It checks for new data and refreshes every 5 seconds. It tells the user when the data was last updated using the timestamp from the csv file.
 
 ## Technologies Used
 
-I made this as a Django and React app because that's what I'm most familiar with at the moment. In hindsight, I might just do a frontend React app, because there's a bit of a lag on getting the data. I originally went with Django because I thought using Python to deal with the CSV would be more straightforward than doing it in JavaScript.
+I made this as a Django and React app because that's what I'm most familiar with at the moment. In hindsight, I might just do a frontend React app, because Django seems like overkill here, and there's a bit of a lag on getting the data. I originally went with Django because I thought using Python to deal with the CSV would be more straightforward than doing it in JavaScript.
 
 ## Shortcomings
 
